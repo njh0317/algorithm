@@ -3,7 +3,6 @@ def bfs(graph, start, visited):
     #처음에 큐 하나 선언
     queue = deque([start])
     visited[start] = True
-
     while(queue):
         v=queue.popleft()
         print(v, end=' ')
