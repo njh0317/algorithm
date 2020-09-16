@@ -15,6 +15,7 @@ def dfs(x,y):
         dfs(x-1,y)
         dfs(x,y-1)
         dfs(x,y+1)
+        #네 방향을 다 갔음에도 더이상 갈 곳이 없을 때 True로 종료
         return True
 
     return False
@@ -23,7 +24,9 @@ num=0
 for i in range(0,N):
     for j in range(0,M):
         if(ice[i][j]==0):
-            num=num+1
+            if(True == dfs(i,j)):
+                print(ice)
+                num=num+1
 
 
 print(num)
