@@ -1,12 +1,3 @@
-# 5 3
-# 1
-# 2
-# 8
-# 4
-# 9
-
-
-
 def make_router(distance):
     now_point = router[0]
     num_of_router = 1
