@@ -11,15 +11,15 @@ def find_lyric(query, words):
     front_of_query = query.replace(".","")
     while start<=end:
         mid = (start+end)//2
-        if(re.match(query,words[mid]) and len(query) == len(words[mid])):
+        if(re.match(query,words[mid])):
             num+=1
             for i in range(mid+1,len(words)):
-                if (re.match(query, words[i]) and len(query) == len(words[i])):
+                if (re.match(query, words[i])):
                     num+=1
                 else:
                     break
             for i in range(mid-1, -1,-1):
-                if (re.match(query, words[i]) and len(query) == len(words[i])):
+                if (re.match(query, words[i])):
                     num+=1
                 else:
                     break
