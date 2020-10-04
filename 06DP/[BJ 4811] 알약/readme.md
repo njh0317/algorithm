@@ -11,7 +11,7 @@ Dynamic Programming
   + 점화식
   
     >
-        C0 = 0
+        C0 = 1
         
         C1 = C0 * C0
         
