@@ -14,6 +14,10 @@ def change_dir(d):
     else:
         return 3 if(d == 4) else 4
 def change_loc(r,c,s,d,z):
+    if((d == 3 or d == 4) and r>1 and s>r):
+        s = s%(2*r-2)
+    elif((d == 1 or d == 2) and c>1 and s>c):
+        s = s%(2*c-2)
     for i in range(s):
         nextr = r + dr[d]
         nextc = c + dc[d]
