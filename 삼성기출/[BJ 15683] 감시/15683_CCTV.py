@@ -1,6 +1,5 @@
 import copy
 N, M = map(int, input().split())
-visited = [[True]*M for _ in range(N)]
 arr = []
 cctv_num = 0
 dc = [-1,0,1,0]
