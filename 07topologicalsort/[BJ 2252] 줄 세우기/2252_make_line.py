@@ -1,7 +1,3 @@
-# 3 2
-# 1 3
-# 2 3
-
 N, M = map(int, input().split())
 in_degree = [0]*(N+1)
 arr = {}
