@@ -6,7 +6,7 @@ Simulation
 
 ## Review
 
-+ 리스트에서 원하는 value 의 인덱스 값을 찾을 대
++ 리스트에서 원하는 value 의 인덱스 값을 찾을 때
 ``` python
 리스트명.index(value)
 ```
