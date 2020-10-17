@@ -59,7 +59,20 @@ def make_eat_list(arr, ni, nj, ndir):
 
 def backtracking(arr, ni, nj, ndir, eat):
     global max_eat
+    # print("before change")
+    # for i in range(len(arr)):
+    #     for j in range(len(arr[i])):
+    #         print(arr[i][j][0], end=" ")
+    #     print()
+    # print()
     change_fish_position(arr)
+    # print("after change")
+    # for i in range(len(arr)):
+    #     for j in range(len(arr[i])):
+    #         print(arr[i][j][0], end=" ")
+    #     print()
+    # print()
+
     eat_list = make_eat_list(arr, ni, nj, ndir)
     if(len(eat_list) == 0):#먹을 수 있는 물고기가 없으면
         max_eat = max(max_eat, eat)
