@@ -103,7 +103,3 @@ if __name__ == "__main__":
                 find_big_ice(i, j)
     print(count())
     print(big_ice)
-    
-
-
-    
