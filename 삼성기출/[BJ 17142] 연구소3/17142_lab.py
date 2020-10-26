@@ -50,16 +50,16 @@ def active_virus(num_list, zero_num):
     if(zero_num == 0):
         min_time = min(min_time, max_time)
 
-def make_comb(num, prev, num_list):
-    if(num==M):
-        #바이러스 활성화 함수 호출
+# def make_comb(num, prev, num_list):
+#     if(num==M):
+#         #바이러스 활성화 함수 호출
 
-        active_virus(num_list)
-        return
-    for i in range(prev, len(virus)):
-        num_list.append(i)
-        make_comb(num+1, i+1, num_list)
-        num_list.pop(-1)
+#         active_virus(num_list)
+#         return
+#     for i in range(prev, len(virus)):
+#         num_list.append(i)
+#         make_comb(num+1, i+1, num_list)
+#         num_list.pop(-1)
 
 
 if __name__ == "__main__":
