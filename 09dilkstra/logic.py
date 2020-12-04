@@ -19,6 +19,35 @@ def dijkstra(graph, start):
                 heapq.heappush(queue, [distance, adjacent])
     return distances
 
+def path(graph, start, end):
+    distances = {vertex : [float('inf'), start] for vertex in graph}
+    print(distances)
+    distances[start] = [0, start]
+    print(distances)
+    queue = []
+
+    #그래프의 시작 정점과 시작 정점의 거리(0)을 최소 힙에 넣어줌
+    heapq.heappush(queue, [distances[start][0], start])
+    
+    while(queue):
+        current_distance, current_vertex = heapq.heappop(queue)
+
+        if(distances[current_vertex][0]<current_distance):
+            continue
+        for adjacent, weight in graph[current_vertex].items():
+            distance = current_distance + weight
+            if(distance < distances[adjacent][0]):
+                distances[adjacent] = [distance, current_vertex]
+                heapq.heappush(queue, [distance, adjacent])
+                print(distances)
+    path = end
+    path_output = end + '->'
+    while distances[path][1] != start:
+        path_output += distances[path][1]+'->'
+        path = distances[path][1]
+    path_output += start
+    print(path_output)
+    return distances
 
 mygraph = {
     'A':{'B':8, 'C':1, 'D':2},
@@ -29,4 +58,5 @@ mygraph = {
     'F':{'A':5}
 
 }
-print(dijkstra(mygraph, 'A'))
+# print(dijkstra(mygraph, 'A'))
+path(mygraph, 'A','F')
