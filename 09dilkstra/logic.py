@@ -2,6 +2,7 @@ import heapq
 
 def dijkstra(graph, start):
     distances = {node : float('inf') for node in graph}
+    print(distances)
     distances[start] = 0
     queue = []
     heapq.heappush(queue, [distances[start],start])
@@ -17,6 +18,7 @@ def dijkstra(graph, start):
                 #업데이트
                 distances[adjacent] = distance
                 heapq.heappush(queue, [distance, adjacent])
+        print(distances)
     return distances
 
 def path(graph, start, end):
@@ -58,5 +60,5 @@ mygraph = {
     'F':{'A':5}
 
 }
-# print(dijkstra(mygraph, 'A'))
-path(mygraph, 'A','F')
+print(dijkstra(mygraph, 'A'))
+#path(mygraph, 'A','F')
