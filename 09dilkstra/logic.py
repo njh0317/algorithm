@@ -38,7 +38,7 @@ def path(graph, start, end):
             continue
         for adjacent, weight in graph[current_vertex].items():
             distance = current_distance + weight
-            if(distance < distances[adjacent][0]):
+            if(distance <= distances[adjacent][0]):
                 distances[adjacent] = [distance, current_vertex]
                 heapq.heappush(queue, [distance, adjacent])
                 print(distances)
@@ -61,4 +61,4 @@ mygraph = {
 
 }
 print(dijkstra(mygraph, 'A'))
-#path(mygraph, 'A','F')
+path(mygraph, 'A','F')
