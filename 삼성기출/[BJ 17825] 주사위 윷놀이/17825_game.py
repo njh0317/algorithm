@@ -1,7 +1,7 @@
+board = []
 arr = list(map(int,input().split()))
-
-
 max_score = 0
+
 def backtracking(now, score, position):
     global max_score
     if(now == 10):
@@ -10,79 +10,74 @@ def backtracking(now, score, position):
 
     for i in range(4):
         if(position[i][0]!=-1):
-            flag2 = True
+            flag = True
             temp = position[i]
-            nextposition, flag = horse_next_move(position[i][0], position[i][1], arr[now])
-            for j in range(4):
-                if(i!=j and position[j][0]!=-1):
-                    if(position[j][0]== nextposition):
-                        flag2 = False
-                        break
-            if(flag2 == False):
+            board_type, point = horse_next_move(position[i][0], position[i][1], arr[now])
+            if(board_type != -1):
+                for j in range(4):
+                    if(i!=j and position[j][0]!=-1):
+                        if(position[j][0]== board_type and position[j][1] == point):
+                            flag = False
+                            break
+            if(flag == False):
                 continue
-            if(nextposition!=-1):
-                score+=nextposition
-            position[i] = [nextposition, flag]
+            score+=point
+
+            position[i] = [board_type, point]
             backtracking(now+1, score, position)
-            if(nextposition!=-1):
-                score-=position[i][0]
+            score-=position[i][1]
             position[i] = temp
-
-
-
-def horse_next_move(now_position, flag, dice_num):
-    move_list = []
-    next_position = 0
-    if(10<= now_position < 20 and flag == 1):
-        if(dice_num*3+now_position<20):
-            next_position = dice_num*3+now_position
-        else:
-            dice_num -= ((19 - now_position) // 3 + 1)
-            now_position = 25
-            next_position = dice_num*5+now_position
-        if(next_position == 30):
-            flag = 2
-        else:
-            flag = 1
-    elif(20<= now_position<25 and flag == 1):
-        if(dice_num*2+now_position<25):
-            next_position = dice_num*2+now_position
-        else:
-            now_position=25
-            dice_num -= ((24-now_position)//2+1)
-            next_position = dice_num*5+now_position
-        if(next_position == 30):
-            flag = 2
-        else:
-            flag = 1
-    elif(((25 == now_position or 30<now_position<= 40) and flag == 1) or (flag == 2 and now_position==30)):
-        next_position = dice_num*5+now_position
-        if(next_position!=30):
-            flag = 1
-        else:
-            flag = 2
-    elif(25 < now_position  <=30 and flag ==1):
-        now_position = 28
-        dice_num-=1
-        if(now_position - dice_num >= 25):
-            next_position = now_position-dice_num
-        else:
-            dice_num-=(now_position-25)
-            now_position = 25
-            next_position = dice_num*5+now_position
-        if(next_position == 30):
-            flag = 2
-    else:
-        next_position = now_position+dice_num*2
-        if(next_position == 10 or next_position == 20 or next_position == 30 or next_position == 40):
-            flag = 1
-        else:
-            flag = 0
-    if(next_position > 40):
+def horse_next_move(board_type, now_point, move):
+    now_board = board[board_type]
+    index_of_now_point = now_board.index(now_point)
+    index_of_next_point = index_of_now_point+move
+    
+    if(index_of_next_point >= len(now_board)):
+        return -1, 0 #끝에 도달 
+    if(now_board[index_of_next_point]==-1):
         return -1, 0
-    else:
-        return next_position, flag
+    point = now_board[index_of_next_point]
+    if(board_type == 0 and point%10 == 0):
+        board_type = point//10
+    elif(point == 40):
+        board_type = 4
+    elif((board_type == 1 or board_type == 2 or board_type == 3) and (point == 25 or point>=30)):
+        board_type = 5
 
-backtracking(0, 0, [[0,0],[0,0],[0,0],[0,0]])
-print(max_score)
+    
+    return board_type, point
 
+def set_board():
+    # default map
+    new_arr = []
+    for i in range(21):
+        new_arr.append(i*2)
+    new_arr.append(-1)
+    board.append(new_arr)
+
+    # 10 map
+    new_arr = [10, 13, 16, 19, 25, 30, 35, 40, -1]
+    board.append(new_arr)
+
+    # 20 map
+    new_arr = [20, 22, 24, 25, 30, 35, 40, -1]
+    board.append(new_arr)
+
+    # 30 map
+    new_arr = [30, 28, 27, 26, 25, 30, 35, 40, -1]
+    board.append(new_arr)
+
+    # 40 map
+    new_arr = [40, -1]
+    board.append(new_arr)
+
+    # 25 map
+    new_arr = [25, 30, 35, 40, -1]
+    board.append(new_arr)
+
+
+
+if __name__ =="__main__":
+    set_board()
+    backtracking(0, 0, [[0,0],[0,0],[0,0],[0,0]])
+    print(max_score)
