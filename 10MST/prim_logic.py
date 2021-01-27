@@ -62,3 +62,4 @@ if __name__ == "__main__":
         real_graph[u].append((weight, u, v))
     print(real_graph)
     print(prim('A'))
+    print(distances)
