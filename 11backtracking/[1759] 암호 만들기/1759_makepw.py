@@ -25,12 +25,9 @@ def backtracking(arr, index, cnt):
             arr.pop(-1)
             visited[i] = False
 
-
-
 if __name__ == "__main__":
     L, C = map(int, input().split())
     char_list = list(input().split())
     char_list.sort()
-    print(char_list)
     visited = [False]*C
     backtracking([], 0, 0)
