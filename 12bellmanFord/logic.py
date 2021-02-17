@@ -11,7 +11,6 @@ def bellman_ford(graph, start):
     for _ in range(len(graph)-1):
         for node in graph:
             #각 정점마다 모든 인접 정점들을 탐색 
-            print(node)
             for neighbor in graph[node]:
                 #[기존 인접 정점까지의 거리 > 기존 현재 정점까지 거리 + 현재 정점부터 인접 정점까지 거리]인 경우 갱신
                 if distance[neighbor]>distance[node]+graph[node][neighbor]:
