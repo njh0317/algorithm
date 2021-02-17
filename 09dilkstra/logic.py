@@ -50,15 +50,19 @@ def path(graph, start, end):
     path_output += start
     print(path_output)
     return distances
-
 mygraph = {
-    'A':{'B':8, 'C':1, 'D':2},
-    'B':{},
-    'C':{'B':5, 'D':2},
-    'D':{'E':3, 'F':5},
-    'E':{'F':1},
-    'F':{'A':5}
-
+    '0':{'1':12, '2':8},
+    '1':{'2':-7},
+    '2':{}
 }
-print(dijkstra(mygraph, 'A'))
-path(mygraph, 'A','F')
+# mygraph = {
+#     'A':{'B':8, 'C':1, 'D':2},
+#     'B':{},
+#     'C':{'B':5, 'D':2},
+#     'D':{'E':3, 'F':5},
+#     'E':{'F':1},
+#     'F':{'A':5}
+
+# }
+print(dijkstra(mygraph, '0'))
+path(mygraph, '0','2')
