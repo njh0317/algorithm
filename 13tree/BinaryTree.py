@@ -189,11 +189,3 @@ class BinaryTree:
             return True
         else:
             return False
-
-if __name__ == "__main__":
-    tree = BinaryTree(Node('7'))
-    tree.insert(Node('2'))
-    tree.insert(Node('10'))
-    tree.insert(Node('4'))
-    tree.insert(Node('8'))
-    tree.inorder()
