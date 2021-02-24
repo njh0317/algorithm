@@ -1,0 +1,43 @@
+tree = {}
+def init():
+    for i in range(N):
+        tree[i+1] = []
+def find_max(start):
+    visited = [-1]*(N+1)
+    visited[start] = 0
+    queue = []
+    queue.append([start, 0])
+    max_vertex, max_weight = start, 0
+    while(queue):
+        vertex, now_weight = queue.pop(0)
+
+        linked_list = tree[vertex]
+        for node in linked_list:
+            child, weight = node
+            if(visited[child] == -1):
+                visited[child] = now_weight+weight
+                queue.append([child, now_weight+weight])
+                if(max_weight<now_weight+weight):
+                    max_vertex = child
+                    max_weight = now_weight+weight
+    return max_vertex, max_weight
+
+if __name__ == "__main__":
+    N = int(input())
+    init()
+    for i in range(N):
+        new_list = list(map(int, input().split()))
+        parent = new_list[0]
+        index = 1
+        while(True):
+            if(new_list[index] == -1):
+                break
+            child, weight = new_list[index], new_list[index+1]
+            tree[parent].append([child, weight])
+            tree[child].append([parent, weight])
+            index += 2
+    y, weight = find_max(1)
+    z, weight = find_max(y)
+    print(weight)
+    
+    
