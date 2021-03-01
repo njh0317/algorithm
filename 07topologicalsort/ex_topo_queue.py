@@ -36,4 +36,4 @@ def topological_sort_queue(adj_list):
     print("answer: ", answer)
 
 
-print(topological_sort_queue(adj_list))
+topological_sort_queue(adj_list)
