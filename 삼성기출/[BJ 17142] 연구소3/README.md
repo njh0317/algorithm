@@ -6,7 +6,7 @@ BFS, Bruteforce
 
 ## Description
 
-#### 기본 로직
+### 기본 로직
 
 `map` : 공간 정보를 담고 있는 이차원 리스트
 
@@ -18,7 +18,7 @@ BFS, Bruteforce
 
 2) 선택된 바이러스를 시작으로 BFS로 바이러스를 퍼트린다.
 
-#### 함수 설명
+### 함수 설명
 
 **`void choose_virus(vector<pair<int, int>> &active_virus, int index)`** : 
 
