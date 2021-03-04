@@ -1,161 +1,90 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
-#include <utility>
+#include <algorithm>
 #include <queue>
-#include <memory.h>
+#include <cstring>
 using namespace std;
-
-typedef struct
-{
-    int x;
-    int y;
-    int time;
+typedef struct{
+    int y, x, t;
 }st;
-int dx[4] = {0,0,-1,1}; //상하좌우
-int dy[4] = {-1,1,0,0}; // 
-int N, M;
-int zero_num = 0;
-vector<st> virus_list;
-int min_time = 999999;
-int arr[50][50];
-bool isIn(int x, int y)
+int MAXT = 50*50+1;
+int N, M, map[50][50], empty_space;
+vector<pair<int, int>> virus;
+int dx[4] = {0, 1, 0, -1};
+int dy[4] = {-1, 0, 1, 0};
+bool isin(int x, int y)
 {
-    if(0>x||x>=N) return false;
-    if(0>y||y>=N) return false;
-    if(arr[y][x] == 1) return false;
-    return true;
-}
-bool isVirus(int x, int y)
-{
-    for(int i=0;i<virus_list.size();i++)
-    {
-        if(virus_list[i].x == x and virus_list[i].y == y)
-        {
-            return true;
-        }
-    }
+    if(0<=x && x<N && 0<=y && y<N) return true;
     return false;
 }
-void active_virus(vector<int> num_list)
+int spread_virus(vector<pair<int, int>> &active_virus)
 {
-    int visited[N][N];
-    memset(visited, 0, sizeof(visited));
-
+    int time = 0, check_empty = empty_space;
+    bool visited[50][50];
+    bool findflag = false;
     queue<st> q;
-    for(int i=0;i<num_list.size();i++)
-    {
-        st new_node;
-        new_node.x = virus_list[num_list[i]].x;
-        new_node.y = virus_list[num_list[i]].y;
-        new_node.time = virus_list[num_list[i]].time;
-        q.push(new_node);
-        visited[virus_list[i].y][virus_list[i].x] = 1;
+    memset(visited, false, sizeof(visited));
+    for(auto& v:active_virus){
+        q.push({v.first, v.second, 0});
+        visited[v.first][v.second] = true;
     }
-    int max_time = 0;
+    
     while(!q.empty())
     {
-        st node = q.front();
+        st top = q.front();
         q.pop();
-        int x = node.x;
-        int y = node.y;
-        int time = node.time;
-        
-        // if(!isVirus(x, y))
-        // {
-        //     
-        // }
-        if(arr[y][x] != 2) zero_num-=1;
-        if(zero_num == 0) 
-        {
-            max_time = max(max_time, time);
-            break;
-        }
-        // for(int i=0;i<5;i++)
-        // {
-        //     for(int j=0;j<5;j++)
-        //     {
-        //         cout<<visited[i][j]<<" ";
-        //     }
-        //     cout<<""<<endl;
-        // }
-        // cout<<""<<endl;
-        
         for(int i=0;i<4;i++)
         {
-            int nextx = x + dx[i];
-            int nexty = y + dy[i];
-
-            if(isIn(nextx, nexty) and visited[nexty][nextx]==0)
-            {
-                visited[nexty][nextx] = 1;
-                st new_node;
-                new_node.x = nextx;
-                new_node.y = nexty;
-                new_node.time = time+1;
-                q.push(new_node);
+            int nexty = top.y + dy[i];
+            int nextx = top.x + dx[i];
+            if(isin(nextx, nexty)){
+                if(map[nexty][nextx]!=1 && find(active_virus.begin(), active_virus.end(), make_pair(nexty, nextx))==active_virus.end() && !visited[nexty][nextx])
+                {
+                    time = max(time, top.t+1);
+                    q.push({nexty, nextx, top.t+1});
+                    visited[nexty][nextx] = true;
+                    if(map[nexty][nextx] == 0) check_empty-=1;
+                }
+                if(check_empty == 0) {
+                    findflag = true;
+                    break;
+                }
             }
         }
-
+        if(findflag) break;
+        
     }
-    if(zero_num == 0)
-        min_time = min(min_time, max_time);
-
+    if(findflag) return time;
+    else return -1;
 }
-void make_comb(int nownum, int prev, vector<int> num_list, int new_zero)
-{
-    if(nownum == M)
-    {
-        //호출 
-        zero_num = new_zero;
-        active_virus(num_list);
+void choose_virus(vector<pair<int, int>> &active_virus, int index){
+    if(active_virus.size() == M){
+        int time = spread_virus(active_virus);
+        if(time!=-1) MAXT = min(MAXT, time);
         return;
     }
-
-    for(int i=prev;i<virus_list.size();i++)
-    {
-        num_list.push_back(i);
-        make_comb(nownum+1, i+1, num_list, new_zero);
-        num_list.pop_back();
+    for(int i=index;i<virus.size();i++){
+        active_virus.push_back(virus[i]);
+        choose_virus(active_virus, i+1);
+        active_virus.pop_back();
     }
-
+    return;
+    
 }
-int main()
-{
-    cin>>N>>M;
-    int temp;
+int main(){
+    scanf("%d %d", &N, &M);
     for(int i=0;i<N;i++)
     {
         for(int j=0;j<N;j++)
         {
-            cin>>temp;
-            arr[i][j] = temp;
-            if(temp == 0) zero_num+=1;
-            if(temp == 2) 
-            {
-                st new_node;
-                new_node.x = j;
-                new_node.y = i;
-                new_node.time = 0;
-                virus_list.push_back(new_node);
-            }
+            cin>>map[i][j];
+            if(map[i][j] == 2) virus.push_back(make_pair(i, j));
+            else if(map[i][j] == 0) empty_space+=1;
         }
     }
-    int 
-    new_zero_num = zero_num;
-    vector<int> num_list;
-    make_comb(0, 0, num_list, new_zero_num);
-    if(min_time == 999999)
-        cout<<-1<<endl;
-    else
-        cout<<min_time<<endl;
-    // for(int i=0;i<N;i++)
-    // {
-    //     for(int j=0;j<N;j++)
-    //     {
-    //         cout<<arr[i][j];
-    //     }
-    //     cout<<""<<endl;
-    // }
+    vector<pair<int, int>> active_virus;
+    choose_virus(active_virus, 0);
+    if(MAXT == 50*50+1) printf("-1");
+    else printf("%d\n", MAXT);
     return 0;
 }
