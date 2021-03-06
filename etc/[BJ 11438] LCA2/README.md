@@ -57,7 +57,7 @@ Tree, LCA
             count+=1
     ```
 
-    *시간초과 해결한 구현*
+    *시간초과를 해결한 구현*
     ```cpp
     int depth_diff = depth[u]-depth[v];
     if(depth_diff != 0)
