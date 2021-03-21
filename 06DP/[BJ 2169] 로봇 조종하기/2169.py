@@ -1,31 +1,35 @@
 import sys
-sys.setrecursionlimit(10**8)
-dx = [-1, 1, 0] #왼오위
-dy = [0, 0, -1]
+sys.setrecursionlimit(10**4)
+dx = [-1, 0, 1] #왼오아
+dy = [0, 1, 0]
 def isin(y, x):
     if(0<=y<N and 0<=x<M):
         return True
 
     return False
-def robot(y, x):
-    if(visited[y][x]!=-1):
-        return visited[y][x]
-    if(y == 0 and x == 0):
+def robot(y, x, before_index):
+    if(y == N-1 and x == M-1):
         return arr[y][x]
-
-    max_cost = 0
+    if(visited[y][x][before_index]!=-1):
+        return visited[y][x][before_index]
+    visited[y][x][before_index] = arr[y][x]
+    max_cost = -100001
     for i in range(3):
         nexty, nextx = y+dy[i], x+dx[i]
-        if(isin(nexty, nextx)):
-            max_cost = max(max_cost,robot(nexty, nextx))
-    visited[y][x]+=max_cost
-    visited[y][x]+=arr[y][x]
-    return visited[y][x]
+        if(isin(nexty, nextx) and abs(i-before_index)!=2):
+            max_cost = max(max_cost,robot(nexty, nextx, i))
+    visited[y][x][before_index]+=max_cost
+    return visited[y][x][before_index]
 
 if __name__ == "__main__":
     N, M = map(int, input().split())
-    visited = [[-1]*M for _ in range(N)]
+    visited = [[0]*M for _ in range(N)]
+    for i in range(N):
+        for j in range(M):
+            visited[i][j] = [-1, -1, -1]
+
     arr = []
     for i in range(N):
         arr.append(list(map(int, input().split())))
-    print(robot(N-1,M-1))
+
+    print(robot(0,0,1))
