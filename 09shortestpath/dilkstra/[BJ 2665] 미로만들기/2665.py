@@ -8,7 +8,7 @@ def isin(y, x):
 def dilkstra():
     distances = [[float('inf')]*n for _ in range(n)]
     distances[0][0] = 0
-    queue = [[0, 0, 0]]#y, x, 0
+    queue = [[0, 0, 0]]
     while(queue):
         weight, y, x = heapq.heappop(queue)
         # if(y == n-1 and x == n-1):
