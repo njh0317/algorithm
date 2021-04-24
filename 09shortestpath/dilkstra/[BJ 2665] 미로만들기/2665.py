@@ -27,6 +27,7 @@ def dilkstra():
                     distances[nexty][nextx] = next_distance
                     heapq.heappush(queue, [next_distance, nexty, nextx])
     return distances
+
 if __name__ == "__main__":
     n = int(input())
     arr=[]
