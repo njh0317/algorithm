@@ -10,7 +10,7 @@ if __name__ == "__main__":
             if(t>mid_h):
                 sum_h+=(t-mid_h)
         
-        if sum_h > M:
+        if sum_h >= M:
             if min_h == mid_h:
                 break
             min_h = mid_h
