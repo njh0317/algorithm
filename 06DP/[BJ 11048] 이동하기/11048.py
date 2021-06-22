@@ -6,6 +6,7 @@ def isin(y, x):
     return False
 if __name__ == "__main__":
     N, M = map(int, input().split())
+    
     arr = [list(map(int, input().split())) for _ in range(N)]
     dp = []
 
